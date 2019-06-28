@@ -1,4 +1,3 @@
-import com.line.qa.TennisScore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

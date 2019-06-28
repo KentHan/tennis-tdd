@@ -1,5 +1,3 @@
-package com.line.qa;
-
 import java.util.HashMap;
 
 import static java.lang.Math.abs;
