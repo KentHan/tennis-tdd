@@ -30,17 +30,16 @@ public class TennisScore {
             } else {
                 return map.get(playerOneScore) + " All";
             }
+        } else {
+            if ((playerOneScore >= 4 || playerTwoScore >= 4)) {
+                if (scoreDiff() == 1) {
+                    return playerOneScore > playerTwoScore ? playerOneName + " Adv" : playerTwoName + " Adv";
+                } else if (scoreDiff() == 2) {
+                    return playerOneScore > playerTwoScore ? playerOneName + " Win" : playerTwoName + " Win";
+                }
+            }
+            return map.get(playerOneScore) + " " + map.get(playerTwoScore);
         }
-
-        if (afterDeuce() && scoreDiff() == 1) {
-            return playerOneScore > playerTwoScore ? playerOneName + " Adv" : playerTwoName + " Adv";
-        }
-
-        if ((playerOneScore >= 4 || playerTwoScore >= 4) && scoreDiff() >= 2) {
-            return playerOneScore > playerTwoScore ? playerOneName + " Win" : playerTwoName + " Win";
-        }
-
-        return map.get(playerOneScore) + " " + map.get(playerTwoScore);
     }
 
     private boolean samePoint() {
@@ -49,10 +48,6 @@ public class TennisScore {
 
     private int scoreDiff() {
         return abs(playerOneScore - playerTwoScore);
-    }
-
-    private boolean afterDeuce() {
-        return playerOneScore >= 3 && playerTwoScore >= 3;
     }
 
     public void playerOneScored() {
