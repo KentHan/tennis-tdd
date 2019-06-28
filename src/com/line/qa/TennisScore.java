@@ -26,33 +26,35 @@ public class TennisScore {
 
     public String score() {
 
-        if (playerOneScore == playerTwoScore) {
+        if (samePoint()) {
             if (playerOneScore >= 3) {
                 return "Deuce";
-            }
-            return map.get(playerTwoScore) + " All";
-        }
-
-        if (playerOneScore >= 3 && playerTwoScore >= 3) {
-            if (abs(playerOneScore - playerTwoScore) == 1) {
-                return playerOneScore > playerTwoScore ? playerOneName + " Adv" : playerTwoName + " Adv";
             } else {
-                return playerOneScore > playerTwoScore ? playerOneName + " Win" : playerTwoName + " Win";
+                return map.get(playerOneScore) + " All";
             }
         }
 
-        if ((playerOneScore >= 4 || playerTwoScore >= 4) && (abs(playerOneScore - playerTwoScore) >= 2)) {
+        if (afterDeuce() && scoreDiff() == 1) {
+            return playerOneScore > playerTwoScore ? playerOneName + " Adv" : playerTwoName + " Adv";
+        }
+
+        if ((playerOneScore >= 4 || playerTwoScore >= 4) && scoreDiff() >= 2) {
             return playerOneScore > playerTwoScore ? playerOneName + " Win" : playerTwoName + " Win";
         }
 
-        if (playerTwoScore > 0) {
-            return "Love " + map.get(playerTwoScore);
-        }
+        return map.get(playerOneScore) + " " + map.get(playerTwoScore);
+    }
 
-        if (playerOneScore > 0) {
-            return map.get(playerOneScore) + " Love";
-        }
-        return "";
+    private boolean samePoint() {
+        return playerOneScore == playerTwoScore;
+    }
+
+    private int scoreDiff() {
+        return abs(playerOneScore - playerTwoScore);
+    }
+
+    private boolean afterDeuce() {
+        return playerOneScore >= 3 && playerTwoScore >= 3;
     }
 
     public void playerOneScored() {
