@@ -24,25 +24,44 @@ public class TennisScore {
 
     public String score() {
 
-        if (samePoint()) {
-            if (playerOneScore >= 3) {
-                return "Deuce";
-            } else {
-                return map.get(playerOneScore) + " All";
-            }
-        } else {
-            if ((playerOneScore >= 4 || playerTwoScore >= 4)) {
-                if (scoreDiff() == 1) {
-                    return playerOneScore > playerTwoScore ? playerOneName + " Adv" : playerTwoName + " Adv";
-                } else if (scoreDiff() == 2) {
-                    return playerOneScore > playerTwoScore ? playerOneName + " Win" : playerTwoName + " Win";
-                }
-            }
-            return map.get(playerOneScore) + " " + map.get(playerTwoScore);
-        }
+        return isSamePoint() ?
+                isDeuce() ? deuce() : sameScore() :
+                isReadyForGamePoint() ? advState() : lookupScore();
     }
 
-    private boolean samePoint() {
+    private String sameScore() {
+        return map.get(playerOneScore) + " All";
+    }
+
+    private String deuce() {
+        return "Deuce";
+    }
+
+    private String advState() {
+        return isAdv() ? String.format("%s Adv", advPlayer()) : String.format("%s Win", advPlayer());
+    }
+
+    private boolean isDeuce() {
+        return playerOneScore >= 3;
+    }
+
+    private boolean isAdv() {
+        return scoreDiff() == 1;
+    }
+
+    private boolean isReadyForGamePoint() {
+        return playerOneScore >= 4 || playerTwoScore >= 4;
+    }
+
+    private String advPlayer() {
+        return playerOneScore > playerTwoScore ? playerOneName:playerTwoName;
+    }
+
+    private String lookupScore() {
+        return map.get(playerOneScore) + " " + map.get(playerTwoScore);
+    }
+
+    private boolean isSamePoint() {
         return playerOneScore == playerTwoScore;
     }
 
